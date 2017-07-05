@@ -19,10 +19,8 @@
     <script type="text/babel">
 
     var Navbar = React.createClass({
-      getDefaultProps(){
-        return {
-          brand: 'React Strap'
-        }
+      change(page){
+        this.props.change(page)
       },
       render(){
         return(
@@ -33,9 +31,9 @@
               </div>
               <div id="navbar">
                 <ul className="nav navbar-nav">
-                  <li className={(this.props.currentPage === 'home') ? 'active' : ''} ><a href="#">Home</a></li>
-                  <li className={(this.props.currentPage === 'about') ? 'active' : ''}><a href="#">About</a></li>
-                  <li className={(this.props.currentPage === 'contact') ? 'active' : ''}><a href="#">Contact</a></li>
+                  <li className={(this.props.currentPage === 'home') ? 'active' : ''} ><a onClick={this.change.bind(this,'home')} href="#">Home</a></li>
+                  <li className={(this.props.currentPage === 'about') ? 'active' : ''}><a onClick={this.change.bind(this,'about')} href="#">About</a></li>
+                  <li className={(this.props.currentPage === 'contact') ? 'active' : ''}><a onClick={this.change.bind(this,'contact')} href="#">Contact</a></li>
                 </ul>
               </div>
             </div>
@@ -91,10 +89,15 @@
             text: 'Bootstrap theme'
           }
         },
+        handleChange(page){
+          this.setState({
+            currentPage: page
+          });
+        },
       render(){
         return(
           <div>
-            <Navbar currentPage={this.state.currentPage} brand={this.props.brand}/>
+            <Navbar change={this.handleChange} currentPage={this.state.currentPage} brand={this.props.brand}/>
             <Jumbotron heading={this.props.heading} text={this.props.text}/>
             <Page currentPage={this.state.currentPage}/>
           </div>
