@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Bootstrap</title>
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+    var Navbar = React.createClass({
+      getDefaultProps(){
+        return {
+          brand: 'React Strap'
+        }
+      },
+      render(){
+        return(
+          <nav className="navbar navbar-default">
+            <div className="container">
+              <div className="navbar-header">
+                <a className="navbar-brand" href="#">{this.props.brand}</a>
+              </div>
+              <div id="navbar">
+                <ul className="nav navbar-nav">
+                  <li className={(this.props.currentPage === 'home') ? 'active' : ''} ><a href="#">Home</a></li>
+                  <li className={(this.props.currentPage === 'about') ? 'active' : ''}><a href="#">About</a></li>
+                  <li className={(this.props.currentPage === 'contact') ? 'active' : ''}><a href="#">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+    })
+    var Jumbotron = React.createClass({
+      render(){
+        return(
+          <div>
+            <div className="jumbotron">
+              <div className="container">
+                <h1>{this.props.heading}</h1>
+                <p className="lead">{this.props.text}</p>
+                <button className="btn btn-primary btn-lg" href="#">Open</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    })
+    var Page = React.createClass({
+      render(){
+        var pageContent;
+        if(this.props.currentPage === 'home'){
+          pageContent = 'This is the homepage'
+        } else if (this.props.currentPage === 'about') {
+          pageContent = 'This is the about page'
+        } else if (this.props.currentPage === 'contact'){
+          pageContent = 'This is the contact page'
+        }
+        return(
+          <div>
+            <div className="container">
+              <h2>{this.props.currentPage.charAt(0).toUpperCase() + this.props.currentPage.slice(1)}</h2>
+              {pageContent}
+            </div>
+          </div>
+        );
+      }
+    })
+    var Theme = React.createClass({
+        getInitialState(){
+          return {
+            currentPage:'home'
+          }
+        },
+        getDefaultProps(){
+          return {
+            brand: 'React Strap',
+            heading: 'Hello',
+            text: 'Bootstrap theme'
+          }
+        },
+      render(){
+        return(
+          <div>
+            <Navbar currentPage={this.state.currentPage} brand={this.props.brand}/>
+            <Jumbotron heading={this.props.heading} text={this.props.text}/>
+            <Page currentPage={this.state.currentPage}/>
+          </div>
+        );
+      }
+    })
+
+      ReactDOM.render(
+        <div>
+          <Theme/>
+        </div>,
+        document.getElementById('root')
+      );
+
+    </script>
+  </body>
+</html>
